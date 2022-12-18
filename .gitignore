@@ -1,0 +1,7 @@
+.idea
+example/data
+example/generate
+*.exe
+*.android
+*.linux
+example/resource.syso
