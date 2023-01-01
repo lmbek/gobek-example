@@ -23,8 +23,8 @@ package main
 
 import (
 	"api"
-	"fileserver"
-	"launcher"
+	"github.com/NineNineFive/go-local-web-gui/fileserver"
+	"github.com/NineNineFive/go-local-web-gui/launcher"
 	"net/http"
 	"os"
 	"runtime"
