@@ -11,7 +11,7 @@
 // ** Reason Of Framework Explained **
 // This application is meant to find a port and launch a frontend in chrome (windows) or chromium (linux).
 // Meanwhile, it will open a http localhost backend with an api.
-// The API package at /development/backend/api/ can be replaced to fit another application,
+// The API package at ./backend/api/ can be replaced to fit another application,
 // if the framework is to be used for other applications.
 // It is important to note, that the system will require a frontend directory and a data directory,
 // when the application is tested and released, these will also need to be managed (other applications can be put in)
@@ -30,36 +30,42 @@ import (
 	"runtime"
 )
 
-var projectName = "NewProjectName"
-var organisationName = "NewCompanyName"
+// For windows we need a organisation name and project name
+var organisationName = "NewOrganisationName" // put in organisation name
+var projectName = "NewProjectName"           // put in project name
 
-// var address = "localhost:10995"
-var frontendPath = "./frontend"
+var frontendPath = "./frontend" // this should be set to where frontend files is (frontend folder: html, css, javascript...)
 
 var chromeLauncher = launcher.ChromeLauncher{
 	Location:                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
 	LocationCMD:             "C:\\\"Program Files\"\\Google\\Chrome\\Application\\chrome.exe",
 	FrontendInstallLocation: os.Getenv("localappdata") + "\\Google\\Chrome\\InstalledApps\\" + organisationName + "\\" + projectName,
 	Domain:                  "localhost",
-	PortMin:                 19430,
-	PreferredPort:           19451,
-	PortMax:                 19500,
+	PortMin:                 11430,
+	PreferredPort:           11451,
+	PortMax:                 11500,
 }
 
+var chromiumLauncher = launcher.DefaultChromiumLauncher // default chrome or chromium launcher settings can be used like this
+/* // Otherwise they can also be customized like this
 var chromiumLauncher = launcher.ChromiumLauncher{
 	Location:      "/var/lib/snapd/desktop/applications/chromium_chromium.desktop", // TODO: check if better location or can be customised
 	Domain:        "localhost",
-	PortMin:       19430,
-	PreferredPort: 19451,
-	PortMax:       19500,
+	PortMin:       11430,
+	PreferredPort: 11451,
+	PortMax:       11500,
 }
+*/
 
 func main() {
 	launchApp()
 }
 
 func initHTTPHandlers() {
+	// static fileserver
 	http.HandleFunc("/", fileserver.ServeFileServer)
+
+	// api (local api is at ./backend/api)
 	http.HandleFunc("/api/", api.ServeAPIUseGZip)
 }
 
@@ -67,18 +73,18 @@ func launchApp() {
 	switch runtime.GOOS {
 	case "windows":
 		initHTTPHandlers()
-		launcher.StartFrontendAndBackendWindows(frontendPath, chromeLauncher)
+		launcher.StartOnWindows(frontendPath, chromeLauncher)
 		return
 	case "darwin": // "mac"
 		panic("Darwin Not Supported Yet")
 		return
 	case "linux": // "linux"
 		initHTTPHandlers()
-		launcher.StartFrontendAndBackendLinux(frontendPath, chromiumLauncher)
+		launcher.StartOnLinux(frontendPath, chromiumLauncher)
 		return
 	default: // "freebsd", "openbsd", "netbsd"
 		initHTTPHandlers()
-		launcher.StartFrontendAndBackendLinux(frontendPath, chromiumLauncher)
+		launcher.StartOnLinux(frontendPath, chromiumLauncher)
 		return
 	}
 }

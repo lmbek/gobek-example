@@ -1,5 +1,5 @@
-module go-local-web-gui
+module GoLWExample
 
 go 1.19
 
-require github.com/NineNineFive/go-local-web-gui v0.4.3 // indirect
+require github.com/NineNineFive/go-local-web-gui v0.4.5 // indirect
