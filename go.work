@@ -1,8 +1,3 @@
 use .
 use ./backend/go-local-web-api/
 use ./backend/go-local-web-api/example
-use ./backend/go-local-web-gui/fileserver
-use ./backend/go-local-web-gui/fileserver/gzipResponse
-use ./backend/go-local-web-gui/launcher
-use ./backend/go-local-web-gui/utils
-use ./backend/go-local-web-gui/windows
