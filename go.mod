@@ -1,5 +1,5 @@
 module GoLWExample
 
-go 1.19
+go 1.20
 
-require github.com/NineNineFive/go-local-web-gui v0.4.13 // indirect
+require github.com/NineNineFive/go-local-web-gui v0.5.0 // indirect

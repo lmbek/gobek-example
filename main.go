@@ -23,11 +23,10 @@ package main
 
 import (
 	"api"
-	"github.com/NineNineFive/go-local-web-gui/fileserver"
+	"fmt"
 	"github.com/NineNineFive/go-local-web-gui/launcher"
 	"net/http"
 	"os"
-	"runtime"
 )
 
 // For windows we need a organisation name and project name
@@ -58,33 +57,10 @@ var chromiumLauncher = launcher.ChromiumLauncher{
 */
 
 func main() {
-	launchApp()
-}
-
-func initHTTPHandlers() {
-	// static fileserver
-	http.HandleFunc("/", fileserver.ServeFileServer)
-
-	// api (local api is at ./backend/api)
 	http.HandleFunc("/api/", api.ServeAPIUseGZip)
-}
 
-func launchApp() {
-	switch runtime.GOOS {
-	case "windows":
-		initHTTPHandlers()
-		launcher.StartOnWindows(frontendPath, chromeLauncher)
-		return
-	case "darwin": // "mac"
-		panic("Darwin Not Supported Yet")
-		return
-	case "linux": // "linux"
-		initHTTPHandlers()
-		launcher.StartOnLinux(frontendPath, chromiumLauncher)
-		return
-	default: // "freebsd", "openbsd", "netbsd"
-		initHTTPHandlers()
-		launcher.StartOnLinux(frontendPath, chromiumLauncher)
-		return
+	err := launcher.Start(frontendPath, chromeLauncher, chromiumLauncher) // serves "/" as fileserver.ServeFileServer. If you want to manage "/", then use launcher.StartCustom() instead
+	if err != nil {
+		fmt.Println(err)
 	}
 }
