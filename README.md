@@ -25,24 +25,22 @@ Chrome (Windows) or Chromium (Linux)
 
 ## How to use (download example project)
 The best way to start using the project is to download the example project at:
-https://github.com/NineNineFive/go-local-web-example
+https://github.com/lmbek/gobek-example
 
 This example project uses this package and combines it with a local api
 Then the Go api is being developed and customized by you together with the frontend (JavaScript, HTML, CSS)
 
 ## How to use (with go get)
 first run the following in CMD (with go installed)
-<code>go get github.com/NineNineFive/go-local-web-gui</code>
+<code>go get github.com/lmbek/gobek</code>
 Example: how to add framework to main.go
 <pre>
 package main
 
 import (
-	"github.com/NineNineFive/go-local-web-gui/fileserver"
-	"github.com/NineNineFive/go-local-web-gui/launcher"
-	"net/http"
+	"fmt"
+	"github.com/lmbek/gobek/launcher"
 	"os"
-	"runtime"
 )
 
 // For windows we need a organisation name and project name
@@ -51,37 +49,46 @@ var projectName = "NewProjectName"           // put in project name
 
 var frontendPath = "./frontend" // this should be set to where frontend files is (frontend folder: html, css, javascript...)
 
-// remember to change the ports to something unique
 var chromeLauncher = launcher.ChromeLauncher{
-	Location:                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-	LocationCMD:             "C:\\\"Program Files\"\\Google\\Chrome\\Application\\chrome.exe",
-	FrontendInstallLocation: os.Getenv("localappdata") + "\\Google\\Chrome\\InstalledApps\\" + organisationName + "\\" + projectName,
-	Domain:                  "localhost",
-	PortMin:                 11430,
-	PreferredPort:           11451,
-	PortMax:                 11500,
+	Location:                os.Getenv("programfiles") + "\\Google\\Chrome\\Application\\chrome.exe",
+	FrontendInstallLocation: os.Getenv("localappdata") + "\\Google\\Chrome\\InstalledApps\\" + "DefaultOrganisationName" + "\\" + "DefaultProjectName",
 }
 
 var chromiumLauncher = launcher.DefaultChromiumLauncher // default chrome or chromium launcher settings can be used like this
-/* // Otherwise they can also be customized like this
-var chromiumLauncher = launcher.ChromiumLauncher{
-	Location:      "/var/lib/snapd/desktop/applications/chromium_chromium.desktop", // TODO: check if better location or can be customised
-	Domain:        "localhost",
-	PortMin:       11430,
-	PreferredPort: 11451,
-	PortMax:       11500,
-}
+
+/*
+	// Otherwise they can also be customized like this
+
+	var chromiumLauncher = launcher.ChromiumLauncher{
+		Location:      "/var/lib/snapd/desktop/applications/chromium_chromium.desktop", // TODO: check if better location or can be customised
+		Domain:        "localhost",
+	}
 */
 
 func main() {
-	http.HandleFunc("/api/", api.ServeAPIUseGZip)
-
-	err := launcher.Start(frontendPath, chromeLauncher, chromiumLauncher) // serves "/" as fileserver.ServeFileServer. If you want to manage "/", then use launcher.StartCustom() instead
+    // api example is temporary not avaiable before release of gobek 0.7.0
+	//api.Init()
+	/*
+		var once sync.Once
+		once.Do(func() {
+			http.HandleFunc("/", fileserver.ServeFileServer)
+			http.HandleFunc("/api/", api.ServeAPIUseGZip)
+		})
+		err := launcher.Start(frontendPath, chromeLauncher, chromiumLauncher) // serves "/" as fileserver.ServeFileServer. If you want to manage "/", then use launcher.StartCustom() instead
+		if err != nil {
+			fmt.Println(err)
+		}
+	*/
+	err := launcher.StartDefault(frontendPath, chromeLauncher, chromiumLauncher)
 	if err != nil {
 		fmt.Println(err)
 	}
 }
+
 </pre>
+
+## How to test
+<code>go test ./backend/tests/...</code>
 
 ## How to run
 <code>go run main.go</code>

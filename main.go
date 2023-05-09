@@ -22,10 +22,8 @@
 package main
 
 import (
-	"api"
 	"fmt"
-	"github.com/NineNineFive/go-local-web-gui/launcher"
-	"net/http"
+	"github.com/lmbek/gobek/launcher"
 	"os"
 )
 
@@ -36,30 +34,37 @@ var projectName = "NewProjectName"           // put in project name
 var frontendPath = "./frontend" // this should be set to where frontend files is (frontend folder: html, css, javascript...)
 
 var chromeLauncher = launcher.ChromeLauncher{
-	Location:                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-	LocationCMD:             "C:\\\"Program Files\"\\Google\\Chrome\\Application\\chrome.exe",
-	FrontendInstallLocation: os.Getenv("localappdata") + "\\Google\\Chrome\\InstalledApps\\" + organisationName + "\\" + projectName,
-	Domain:                  "localhost",
-	PortMin:                 11430,
-	PreferredPort:           11451,
-	PortMax:                 11500,
+	Location:                os.Getenv("programfiles") + "\\Google\\Chrome\\Application\\chrome.exe",
+	FrontendInstallLocation: os.Getenv("localappdata") + "\\Google\\Chrome\\InstalledApps\\" + "DefaultOrganisationName" + "\\" + "DefaultProjectName",
 }
 
 var chromiumLauncher = launcher.DefaultChromiumLauncher // default chrome or chromium launcher settings can be used like this
-/* // Otherwise they can also be customized like this
-var chromiumLauncher = launcher.ChromiumLauncher{
-	Location:      "/var/lib/snapd/desktop/applications/chromium_chromium.desktop", // TODO: check if better location or can be customised
-	Domain:        "localhost",
-	PortMin:       11430,
-	PreferredPort: 11451,
-	PortMax:       11500,
-}
+
+/*
+	// Otherwise they can also be customized like this
+
+	var chromiumLauncher = launcher.ChromiumLauncher{
+		Location:      "/var/lib/snapd/desktop/applications/chromium_chromium.desktop", // TODO: check if better location or can be customised
+		Domain:        "localhost",
+	}
 */
 
 func main() {
-	http.HandleFunc("/api/", api.ServeAPIUseGZip)
+	// api example is temporary not avaiable before release of gobek 0.7.0
 
-	err := launcher.Start(frontendPath, chromeLauncher, chromiumLauncher) // serves "/" as fileserver.ServeFileServer. If you want to manage "/", then use launcher.StartCustom() instead
+	//api.Init()
+	/*
+		var once sync.Once
+		once.Do(func() {
+			http.HandleFunc("/", fileserver.ServeFileServer)
+			http.HandleFunc("/api/", api.ServeAPIUseGZip)
+		})
+		err := launcher.Start(frontendPath, chromeLauncher, chromiumLauncher) // serves "/" as fileserver.ServeFileServer. If you want to manage "/", then use launcher.StartCustom() instead
+		if err != nil {
+			fmt.Println(err)
+		}
+	*/
+	err := launcher.StartDefault(frontendPath, chromeLauncher, chromiumLauncher)
 	if err != nil {
 		fmt.Println(err)
 	}
