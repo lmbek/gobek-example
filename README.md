@@ -10,7 +10,7 @@ I am currently working on this project, it will be updated and maintained. I con
 
 This project is used by Beksoft ApS for projects such as:
 * BekCMS
-* (name not announced yet) Password Manager
+* KeyFiles
 * PingPong Game made in Three.js
 * Several local webbased software projects
 
