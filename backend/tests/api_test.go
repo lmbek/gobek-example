@@ -36,7 +36,7 @@ func TestAPIUserEndpoint(test *testing.T) {
 		}
 	})
 	test.Run("call2 /api/user/", func(test *testing.T) {
-		expected := types.JSONMessageResponse{false, "user id does not exist"}
+		expected := types.JSONMessageResponse{false, "Need identifier: /api/user/{id}"}
 		userData, _ := api.HandleEndpoint("/api/user/")
 		result := userData
 		//result := userData.(api.JSONDataResponse).Data
@@ -135,7 +135,7 @@ func TestAPIUserEndpoint(test *testing.T) {
 		}
 	})
 	test.Run("call11 /api/user/995/something-something", func(test *testing.T) {
-		expected := types.JSONMessageResponse{false, "endpoint does not exist"}
+		expected := types.JSONMessageResponse{false, "Invalid endpoint"}
 		userData, _ := api.HandleEndpoint("/api/user/995/something-something")
 		result := userData
 		//result := userData.(api.JSONDataResponse).Data
@@ -146,7 +146,7 @@ func TestAPIUserEndpoint(test *testing.T) {
 		}
 	})
 	test.Run("call12 /api/user/996/something-something", func(test *testing.T) {
-		expected := types.JSONMessageResponse{false, "endpoint does not exist"}
+		expected := types.JSONMessageResponse{false, "user id does not exist"}
 		userData, _ := api.HandleEndpoint("/api/user/996/something-something")
 		result := userData
 		//result := userData.(api.JSONDataResponse).Data
