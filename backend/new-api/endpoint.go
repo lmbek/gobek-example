@@ -12,13 +12,15 @@ import (
 // path: /api/*
 
 func HandleEndpoint(endpoint string) (any, error) {
-	// removing "/api/" prefix with endpoint[5:] and then looking for endpoint
-	currentEndpoint := functions.NextLayer(endpoint[5:])
+	// (Example) start with: /api/user/995/name
+	reducedEndpoint := functions.ReducedFirstLayerEndpoint(endpoint) // (Example) we get: user/995/name/something
+	currentEndpoint := functions.CurrentLayer(reducedEndpoint)       // (Example) we get: user
+
 	switch currentEndpoint {
 	case "links":
 		return links.Get(), nil
 	case "user":
-		return user.HandleEndpoint(currentEndpoint)
+		return user.HandleEndpoint(reducedEndpoint)
 	case "users":
 		return users.Get(), nil
 	case "places":
