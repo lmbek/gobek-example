@@ -41,7 +41,6 @@ func ServeAPI(response http.ResponseWriter, request *http.Request) {
 	// response
 	var jsonResponse any = types.JSONMessageResponse{false, "Not set"}
 
-	fmt.Println(request.URL.Path)
 	// API endpoints
 	jsonResponse, err := HandleEndpoint(request.URL.Path)
 	if err != nil {
