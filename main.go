@@ -22,6 +22,7 @@
 package main
 
 import (
+	"api"
 	"fmt"
 	"github.com/lmbek/gobek/launcher"
 	"os"
@@ -52,7 +53,7 @@ var chromiumLauncher = launcher.DefaultChromiumLauncher // default chrome or chr
 func main() {
 	// api example is temporary not avaiable before release of gobek 0.7.0
 
-	//api.Init()
+	api.Init()
 	/*
 		var once sync.Once
 		once.Do(func() {
