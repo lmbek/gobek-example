@@ -1,11 +1,15 @@
 package id
 
-import "api/types"
+import (
+	"errors"
+)
 
-func Get(identifier string) any {
+func Get(identifier string) (string, error) {
 	if identifier == "995" {
-		return types.JSONDataResponse{true, "995"}
+		return "995", nil
+		// types.JSONDataResponse{true, "995"}
 	} else {
-		return types.JSONMessageResponse{false, "user id does not exist"}
+		return "", errors.New("user id does not exist")
+		// types.JSONMessageResponse{false, "user id does not exist"}
 	}
 }
