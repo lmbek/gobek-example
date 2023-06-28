@@ -1,3 +1,2 @@
 use .
-use ./backend/new-api
-use ./backend/new-api/example
+use ./backend/api
