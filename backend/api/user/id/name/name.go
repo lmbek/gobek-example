@@ -1,11 +1,14 @@
 package name
 
-import "api/types"
+import (
+	"errors"
+)
 
-func Get(id string) any {
+// TODO: make everything into endpoints, so even if we just want to get name, we will handle it as endpoint, just like identifier
+func Get(id string) (any, error) {
 	if id == "995" {
-		return types.JSONDataResponse{true, "LMB"}
+		return "LMB", nil
 	} else {
-		return types.JSONMessageResponse{false, "user id does not exist"}
+		return nil, errors.New("user id does not exist")
 	}
 }
