@@ -1,9 +1,7 @@
 package places
 
-import "api/types"
-
-func Get() any {
+func Get() (any, error) {
 	myData := []string{"Grenaa", "Odense", "Roskilde"}
 
-	return types.JSONDataResponse{Success: true, Data: myData}
+	return myData, nil
 }

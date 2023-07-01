@@ -42,9 +42,11 @@ func ServeAPI(response http.ResponseWriter, request *http.Request) {
 	var jsonResponse any = types.JSONMessageResponse{false, "Not set"}
 
 	// API endpoints
-	jsonResponse, err := HandleEndpoint(request.URL.Path)
+	data, err := HandleEndpoint(request.URL.Path)
 	if err != nil {
-		jsonResponse = types.JSONMessageResponse{false, "Encountered an error: " + err.Error()}
+		jsonResponse = types.JSONMessageResponse{Success: false, Message: err.Error()}
+	} else {
+		jsonResponse = types.JSONDataResponse{Success: true, Data: data}
 	}
 
 	// Marshal JSON

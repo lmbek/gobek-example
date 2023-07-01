@@ -1,10 +1,8 @@
 package users
 
-import "api/types"
-
-func Get() any {
+func Get() (any, error) {
 	// receive data from database
-	myData := []string{"Lars", "ida", "emil"}
+	myData := []string{"995"}
 
-	return types.JSONDataResponse{true, myData}
+	return myData, nil
 }

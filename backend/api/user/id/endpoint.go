@@ -2,9 +2,9 @@ package id
 
 import (
 	"api/functions"
-	"api/types"
 	"api/user/id/age"
 	"api/user/id/name"
+	"errors"
 )
 
 func HandleIdentifierEndpoint(endpoint string) (any, error) {
@@ -16,7 +16,7 @@ func HandleIdentifierEndpoint(endpoint string) (any, error) {
 
 		if err != nil {
 			// user do not exist or database could not connect, etc...
-			return types.JSONMessageResponse{Success: false, Message: err.Error()}, nil
+			return nil, err
 		}
 
 		// check if there is more after identifier - if there is more endpoints
@@ -25,18 +25,19 @@ func HandleIdentifierEndpoint(endpoint string) (any, error) {
 
 		// if we could find user but there was not requested any endpoints after identifier: (example) 995
 		if len(currentEndpoint) == 0 {
-			return types.JSONDataResponse{Success: true, Data: identifier}, nil
+			return identifier, nil
 		}
 
 		switch currentEndpoint {
 		// path: {id}/name/something
 		case "name":
-			return name.Get(userID), nil
+			return name.Get(userID)
 		case "age":
-			return age.Get(userID), nil
+			return age.Get(userID)
 		}
 
-		return types.JSONMessageResponse{Success: false, Message: "Invalid endpoint"}, nil
+		return nil, errors.New("invalid endpoint")
 	}
-	return types.JSONMessageResponse{Success: false, Message: "Need identifier: /api/user/{id}"}, nil
+
+	return nil, errors.New("need identifier: /api/user/{id}")
 }
