@@ -1,9 +1,14 @@
 package links
 
-import "api/types"
+import (
+	"errors"
+)
 
-func Get() any {
-	myData := []string{"https://facebook.dk", "https://google.dk", "https://beksoft.dk"}
+func Get() (any, error) {
+	if true {
+		myData := []string{"https://facebook.dk", "https://google.dk", "https://beksoft.dk"}
+		return myData, nil
+	}
 
-	return types.JSONDataResponse{Success: true, Data: myData}
+	return nil, errors.New("database could not connect")
 }
