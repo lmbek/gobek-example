@@ -1,12 +1,14 @@
 package api
 
 import (
+	"api/example"
 	"api/functions"
 	"api/links"
+	"api/native"
 	"api/places"
-	"api/types"
 	"api/user"
 	"api/users"
+	"errors"
 )
 
 // path: /api/*
@@ -17,14 +19,18 @@ func HandleEndpoint(endpoint string) (any, error) {
 	currentEndpoint := functions.CurrentLayer(reducedEndpoint)       // (Example) we get: user
 
 	switch currentEndpoint {
+	case "native":
+		return native.HandleEndpoint(reducedEndpoint)
+	case "example":
+		return example.List(true)
 	case "links":
-		return links.Get(), nil
+		return links.Get()
 	case "user":
 		return user.HandleEndpoint(reducedEndpoint)
 	case "users":
-		return users.Get(), nil
+		return users.Get()
 	case "places":
-		return places.Get(), nil
+		return places.Get()
 	}
-	return types.JSONMessageResponse{Success: false, Message: "Invalid endpoint"}, nil
+	return nil, errors.New("invalid endpoint")
 }
