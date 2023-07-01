@@ -51,7 +51,7 @@ var chromiumLauncher = launcher.DefaultChromiumLauncher // default chrome or chr
 */
 
 func main() {
-	// api example is temporary not avaiable before release of gobek 0.7.0
+	// api example is temporary not available before release of gobek 0.7.0
 
 	api.Init()
 	/*
