@@ -1,14 +1,18 @@
 package api
 
 import (
+	"api/types"
 	"compress/gzip"
 	"encoding/json"
-	"example"
 	"fmt"
 	"io"
 	"net/http"
 	"strings"
 )
+
+func Init() {
+	http.HandleFunc("/api/", ServeAPIUseGZip)
+}
 
 func ServeAPIUseGZip(response http.ResponseWriter, request *http.Request) {
 	if !strings.Contains(request.Header.Get("Accept-Encoding"), "gzip") {
@@ -25,44 +29,22 @@ func ServeAPIUseGZip(response http.ResponseWriter, request *http.Request) {
 func ServeAPI(response http.ResponseWriter, request *http.Request) {
 	// Redirect if not trailing slash
 	// if the url contains / in the end, then we will ignore it for the API listener (return same result no matter if there is / or not
-	urlPath := request.URL.Path
-	if hasTrailingSlash(urlPath) == false {
-		addTrailingSlashRedirect(urlPath, response, request)
-	}
+	//urlPath := request.URL.Path
+	//	if hasTrailingSlash(urlPath) == false {
+	//addTrailingSlashRedirect(urlPath, response, request)
+	//	}
 
 	// set response header as json
 	response.Header().Set("Content-Type", "application/json")
 	//response.Header().Add("Cache-Control", "max-age=31536000, immutable")
 
 	// response
-	var jsonResponse any = JSONMessageResponse{false, "Not set"}
+	var jsonResponse any = types.JSONMessageResponse{false, "Not set"}
 
-	// api commands (URLs)
-	switch request.URL.Path {
-	case "/api/example/list/":
-		list, err := example.List(true)
-		if err != nil {
-			// error getting data, sending error
-			jsonResponse = JSONMessageResponse{false, err.Error()}
-		} else {
-			// successfully sending data
-			jsonResponse = JSONDataResponse{true, list}
-		}
-		break
-	case "/api/example/list2/":
-		list, err := example.List(true)
-		if err != nil {
-			// error getting data, sending error
-			jsonResponse = JSONMessageResponse{false, err.Error()}
-		} else {
-			// successfully sending data
-			jsonResponse = JSONDataResponse{true, list}
-		}
-		break
-	default:
-		// if not part of api
-		jsonResponse = JSONMessageResponse{false, "Part of the api does not exist"}
-		break
+	// API endpoints
+	jsonResponse, err := HandleEndpoint(request.URL.Path)
+	if err != nil {
+		jsonResponse = types.JSONMessageResponse{false, "Encountered an error: " + err.Error()}
 	}
 
 	// Marshal JSON
@@ -89,14 +71,15 @@ func sendResponse(response http.ResponseWriter, jsonFormattedResponse string) {
 	}
 }
 
-func hasTrailingSlash(urlPath string) bool {
-	if urlPath[len(urlPath)-1] == '/' {
-		return true
-	} else {
-		return false
+/*
+	func hasTrailingSlash(urlPath string) bool {
+		if urlPath[len(urlPath)-1] == '/' {
+			return true
+		} else {
+			return false
+		}
 	}
-}
-
+*/
 func addTrailingSlashRedirect(urlPath string, response http.ResponseWriter, request *http.Request) {
 	http.Redirect(response, request, urlPath+"/", 301) // redirect url to without trailing slash, permanent redirect
 }
