@@ -23,14 +23,8 @@ func HandleEndpoint(endpoint string, response http.ResponseWriter, request *http
 	currentEndpoint := functions.CurrentLayer(reducedEndpoint)       // (Example) we get: user
 
 	switch currentEndpoint {
-	case "download":
-		return download.Start(response, request)
 	case "native":
 		return native.HandleEndpoint(reducedEndpoint)
-	case "png":
-		return png.Get(response, request)
-	case "html":
-		return html.Get(response, request)
 	case "example":
 		return example.List(true)
 	case "links":
@@ -41,6 +35,22 @@ func HandleEndpoint(endpoint string, response http.ResponseWriter, request *http
 		return users.Get()
 	case "places":
 		return places.Get()
+	case "download", "png", "html":
+		return ModifyResponse(currentEndpoint, response, request)
 	}
+
+	return nil, errors.New("invalid endpoint")
+}
+
+func ModifyResponse(endpoint string, response http.ResponseWriter, request *http.Request) (any, error) {
+	switch endpoint {
+	case "download":
+		return download.Start(response, request)
+	case "png":
+		return png.Get(response, request)
+	case "html":
+		return html.Get(response, request)
+	}
+
 	return nil, errors.New("invalid endpoint")
 }
