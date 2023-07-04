@@ -11,7 +11,7 @@ func BenchmarkAPIPath_Links(benchmark *testing.B) {
 
 	// Run the code b.N times
 	for i := 0; i < benchmark.N; i++ {
-		api.HandleEndpoint("/api/links")
+		api.HandleEndpoint("/api/links", nil, nil)
 	}
 }
 
@@ -21,7 +21,7 @@ func BenchmarkAPIPath_User_NoIdentifier(benchmark *testing.B) {
 
 	// Run the code b.N times
 	for i := 0; i < benchmark.N; i++ {
-		api.HandleEndpoint("/api/user")
+		api.HandleEndpoint("/api/user", nil, nil)
 	}
 }
 
@@ -31,7 +31,7 @@ func BenchmarkAPIPath_User_Empty(benchmark *testing.B) {
 
 	// Run the code b.N times
 	for i := 0; i < benchmark.N; i++ {
-		api.HandleEndpoint("/api/user/")
+		api.HandleEndpoint("/api/user/", nil, nil)
 	}
 }
 
@@ -41,7 +41,7 @@ func BenchmarkAPIPath_User_995(benchmark *testing.B) {
 
 	// Run the code b.N times
 	for i := 0; i < benchmark.N; i++ {
-		api.HandleEndpoint("/api/user/995")
+		api.HandleEndpoint("/api/user/995", nil, nil)
 	}
 }
 
@@ -51,7 +51,7 @@ func BenchmarkAPIPath_User_NonExisting(benchmark *testing.B) {
 
 	// Run the code b.N times
 	for i := 0; i < benchmark.N; i++ {
-		api.HandleEndpoint("/api/user/996")
+		api.HandleEndpoint("/api/user/996", nil, nil)
 	}
 }
 
@@ -61,7 +61,7 @@ func BenchmarkAPIPath_Users(benchmark *testing.B) {
 
 	// Run the code b.N times
 	for i := 0; i < benchmark.N; i++ {
-		api.HandleEndpoint("/api/users")
+		api.HandleEndpoint("/api/users", nil, nil)
 	}
 }
 
@@ -71,6 +71,6 @@ func BenchmarkAPIPath_Places(benchmark *testing.B) {
 
 	// Run the code b.N times
 	for i := 0; i < benchmark.N; i++ {
-		api.HandleEndpoint("/api/places")
+		api.HandleEndpoint("/api/places", nil, nil)
 	}
 }
