@@ -1,4 +1,4 @@
-package api
+package types
 
 /*
 	This file contains the type of responses
