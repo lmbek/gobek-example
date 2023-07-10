@@ -1,9 +1,5 @@
 package types
 
-/*
-	This file contains the type of responses
-*/
-
 type JSONDataResponse struct {
 	Success bool `json:"success"`
 	Data    any  `json:"data"`
