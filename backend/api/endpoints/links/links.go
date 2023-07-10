@@ -6,7 +6,7 @@ import (
 
 func Get() (any, error) {
 	if true {
-		myData := []string{"https://facebook.dk", "https://google.dk", "https://linkedin.com"}
+		myData := []string{"https://google.dk", "https://facebook.com", "https://linkedin.com"}
 		return myData, nil
 	}
 

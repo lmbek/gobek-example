@@ -1,4 +1,4 @@
-package users
+package profiles
 
 func Get() (any, error) {
 	// receive data from database

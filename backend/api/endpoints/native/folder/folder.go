@@ -1,4 +1,4 @@
-package choose
+package folder
 
 import (
 	"os/exec"
@@ -14,7 +14,7 @@ func dir() (any, error) {
 	return string(output), nil
 }
 
-func Folder() (any, error) {
+func Choose() (any, error) {
 	cmd := exec.Command("./bin/windows/winapi/winapi.exe")
 	output, err := cmd.Output()
 

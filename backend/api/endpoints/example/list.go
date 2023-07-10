@@ -5,7 +5,7 @@ import (
 )
 
 // List Do something here like reading data from a file or database and return results
-func List(isAllowed bool) (any, error) {
+func Get(isAllowed bool) (any, error) {
 	list := []string{"this", "is", "some", "data"}
 	if isAllowed {
 		return list, nil
