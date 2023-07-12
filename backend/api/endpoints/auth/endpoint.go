@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"api/endpoints/auth/session"
+	"api/endpoints/auth/active"
 	"api/endpoints/auth/signin"
 	"api/endpoints/auth/signout"
 	"api/functions"
@@ -14,12 +14,14 @@ func HandleEndpoint(endpoint string, response http.ResponseWriter, request *http
 
 	switch current {
 	case "active":
-		return session.HandleEndpoint(current, response, request)
+		return active.HandleEndpoint(current, response, request)
 	case "signin":
 		return signin.HandleEndpoint(current, response, request)
 	case "signout":
 		return signout.HandleEndpoint(current, response, request)
+	case "signup":
+		return nil, errors.New("not implemented")
 	}
 
-	return nil, errors.New("You can use the following: /api/auth/signin, /api/auth/signout/, /api/auth/signup")
+	return nil, errors.New("You can use the following: /api/auth/active, /api/auth/signin, /api/auth/signout/, /api/auth/signup")
 }

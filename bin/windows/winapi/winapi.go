@@ -1,3 +1,4 @@
+// NOTE: This file can only be compiled on windows
 package main
 
 import (

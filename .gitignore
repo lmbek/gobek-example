@@ -5,4 +5,4 @@ example/generate
 *.android
 *.linux
 example/resource.syso
-go.work.sum
+*.sum
