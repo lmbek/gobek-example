@@ -207,7 +207,7 @@ func TestAPIUserEndpoint(test *testing.T) {
 		response := httptest.NewRecorder()
 		request, _ := http.NewRequest("GET", endpoint, nil)
 
-		expected := errors.New("need identifier: /api/user/{id}").Error()
+		expected := errors.New("need identifier: /api/profile/{id}").Error()
 		_, err := api.HandleEndpoint(endpoint, response, request)
 		result := err.Error()
 		//result := userData.(api.JSONDataResponse).Data
@@ -225,7 +225,7 @@ func TestAPIUserEndpoint(test *testing.T) {
 		response := httptest.NewRecorder()
 		request, _ := http.NewRequest("GET", endpoint, nil)
 
-		expected := errors.New("need identifier: /api/user/{id}").Error()
+		expected := errors.New("need identifier: /api/profile/{id}").Error()
 		_, err := api.HandleEndpoint(endpoint, response, request)
 		result := err.Error()
 
