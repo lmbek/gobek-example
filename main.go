@@ -22,6 +22,7 @@
 package main
 
 import (
+	"api"
 	"fmt"
 	"github.com/lmbek/gobek"
 	"os"
@@ -39,6 +40,7 @@ var chromiumLauncher = gobek.ChromiumLauncher{
 }
 var frontendPath = "./frontend" // this should be set to where frontend files is (frontend folder: html, css, javascript...)
 func main() {
+	api.Init()
 	err := gobek.StartDefault(frontendPath, chromeLauncher, chromiumLauncher)
 	if err != nil {
 		fmt.Println(err)
