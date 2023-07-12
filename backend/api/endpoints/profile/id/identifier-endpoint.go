@@ -14,7 +14,7 @@ func HandleIdentifierEndpoint(endpoint string, response http.ResponseWriter, req
 
 	// Check if identifier is empty
 	if len(identifier) == 0 {
-		return nil, errors.New("need identifier: /api/user/{id}")
+		return nil, errors.New("need identifier: /api/profile/{id}")
 	}
 
 	// if identifier is not empty we get the endpoints for identifier by reducing it further
