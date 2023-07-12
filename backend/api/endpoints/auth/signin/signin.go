@@ -4,9 +4,18 @@ import (
 	"api/endpoints/auth/session"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 )
+
+func ConnectToDatabase() {
+	if true {
+		fmt.Println("Connected")
+	} else {
+		fmt.Println("Not Connected")
+	}
+}
 
 // SignIn - In order to sign in, the following needs to happen:
 // 1) Get Payload data from request
@@ -14,6 +23,8 @@ import (
 // 3) Give error if login credentials is wrong
 // 4) Give Session Cookie if login credentials match
 func SignIn(response http.ResponseWriter, request *http.Request) (any, error) {
+	ConnectToDatabase()
+
 	// If we got it as form data
 	if request.Header.Get("content-type") == "application/x-www-form-urlencoded" {
 		return SignInWithForm(response, request)
