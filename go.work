@@ -1,2 +1,5 @@
-use .
-use ./backend/api
+use (
+	.
+	backend/api
+	backend/database
+)
