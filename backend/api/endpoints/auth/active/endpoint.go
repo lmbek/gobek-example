@@ -1,6 +1,7 @@
-package session
+package active
 
 import (
+	"api/endpoints/auth/session"
 	"api/functions"
 	"net/http"
 )
@@ -13,7 +14,7 @@ func HandleEndpoint(endpoint string, response http.ResponseWriter, request *http
 
 	switch request.Method {
 	case http.MethodGet:
-		return Active(response, request)
+		return session.Active(response, request)
 	case http.MethodPost:
 		return nil, functions.NotSupportedError()
 	case http.MethodPut:
