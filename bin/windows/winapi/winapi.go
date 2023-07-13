@@ -1,3 +1,4 @@
+// NOTE: This file can only be compiled on windows
 package main
 
 import (
@@ -9,30 +10,11 @@ import (
 
 func main() {
 	folderPath, err := getFolderSelect()
-
 	if err != nil {
 		panic(err)
 	}
-
 	fmt.Print(folderPath)
-
 	return
-	/*
-		if len(os.Args) > 1 {
-
-		}
-
-		fmt.Println("Skriv din besked:")
-
-		var msg string
-
-		_, err := fmt.Scanln(&msg)
-		if err != nil {
-			panic("Could not scan")
-		}
-
-		fmt.Println(msg)
-	*/
 }
 
 func getFolderSelect() (string, error) {
