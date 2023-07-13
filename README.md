@@ -104,3 +104,10 @@ Use something like goversioninfo: https://github.com/josephspurrier/goversioninf
 ## How to build
 
 	go build -ldflags -H=windowsgui -o NewProjectName.exe
+
+## For each project only one instance
+The project is made, so you can only have one instance of the same organisation name and project name open, so if you have multiple project you are developing, please change their project names.
+
+## For advanced users (Databases)
+I have made an example project for more advanced users, where i demonstrated use of sqlite together with gobek <br>
+The project can be found at: https://github.com/lmbek/gobek-sqlite-example
