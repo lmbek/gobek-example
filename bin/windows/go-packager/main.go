@@ -11,6 +11,8 @@ import (
 )
 
 func main() {
+	// NOTE: You are meant to edit these parameters in main, in order to build to your target for each compilation
+	// Most of these parameters is for windows right now
 	flagExample := flag.Bool("example", false, "dump out an example versioninfo.json to stdout")
 	flagOut := flag.String("o", "resource.syso", "output file name")
 	flagGo := flag.String("gofile", "", "Go output file name (optional)")
@@ -36,7 +38,8 @@ func main() {
 	flagTranslation := flag.Int("translation", 0, "translation ID")
 	flagCharset := flag.Int("charset", 0, "charset ID")
 
-	flag64 := flag.Bool("64", false, "generate 64-bit binaries")
+	// NOTE: edit flags for which system you are building syso for, i set flag64 to true, to make it a 64-bit binary (this is important if you use gcc for example)
+	flag64 := flag.Bool("64", true, "generate 64-bit binaries")
 	flagarm := flag.Bool("arm", false, "generate arm binaries")
 
 	flagVerMajor := flag.Int("ver-major", -1, "FileVersion.Major")
